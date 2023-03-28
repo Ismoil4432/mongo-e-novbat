@@ -16,8 +16,8 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post('auth')
-  async create(@Body() createClientDto: CreateClientDto) {
-    return this.clientService.create(createClientDto);
+  async auth(@Body() createClientDto: CreateClientDto) {
+    return this.clientService.auth(createClientDto);
   }
 
   @Get()
@@ -30,7 +30,7 @@ export class ClientController {
     return this.clientService.findById(id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   async update(
     @Param('id') id: string,
     @Body() updateClientDto: UpdateClientDto,

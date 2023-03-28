@@ -8,16 +8,18 @@ import {
   Delete,
 } from '@nestjs/common';
 import { OtpService } from './otp.service';
-import { CreateOtpDto } from './dto/create-otp.dto';
-import { UpdateOtpDto } from './dto/update-otp.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 
 @Controller('otp')
 export class OtpController {
   constructor(private readonly otpService: OtpService) {}
 
-  @Post('create')
-  async create(@Body() createOtpDto: CreateOtpDto) {
-    return this.otpService.create(createOtpDto);
+  @Post('verify/:typeModel')
+  async verifyOtp(
+    @Param('typeModel') typeModel,
+    @Body() verifyOtpDto: VerifyOtpDto,
+  ) {
+    return this.otpService.verifyOtp(verifyOtpDto, typeModel);
   }
 
   @Get()
@@ -28,11 +30,6 @@ export class OtpController {
   @Get(':id')
   async findOneById(@Param('id') id: string) {
     return this.otpService.findById(id);
-  }
-
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateOtpDto: UpdateOtpDto) {
-    return this.otpService.update(id, updateOtpDto);
   }
 
   @Delete(':id')
